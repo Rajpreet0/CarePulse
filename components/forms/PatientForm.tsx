@@ -26,7 +26,7 @@ const PatientForm = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
-  // Define a form
+  // Define a form the UseFormValidation is defined in lib/validation
   const form = useForm<z.infer<typeof UserFormValidation>>({    // The Form is a Type of formSchema, which is deefined above
     resolver: zodResolver(UserFormValidation),
     defaultValues: {
@@ -37,6 +37,7 @@ const PatientForm = () => {
   })
 
   // Define a submit handler
+  // ({name, email, phone}) are destructed values -> (values: z.infer<...>) would also be possible
   async function onSubmit({name, email, phone}: z.infer<typeof UserFormValidation>) {
     setIsLoading(true);
 

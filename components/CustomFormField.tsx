@@ -19,25 +19,29 @@ import { Select, SelectContent, SelectTrigger, SelectValue } from "./ui/select";
 import { Textarea } from "./ui/textarea";
 import { Checkbox } from "./ui/checkbox";
 
+// Interface defining the props for the CustomFormField component.
 interface CustomProps {
-    control: Control<any>,
-    fieldType: FormFieldType,
-    name: string,
-    label?: string,
-    placeholder?: string,
-    iconSrc?: string,
-    iconAlt?: string,
-    disabled?: boolean,
-    dateFormat?: string,
-    showTimeSelect?: boolean,
-    children?: React.ReactNode,
-    renderSkeleton?: (field: any) => React.ReactNode,
+    control: Control<any>,                                // React Hook Form control for managing form state.
+    fieldType: FormFieldType,                             // Enum specifying the type of form field to render.
+    name: string,                                         // Name of the field, used as a key in the form's state.
+    label?: string,                                       // Optional label for the field.
+    placeholder?: string,                                 // Optional placeholder text for the field.
+    iconSrc?: string,                                     // Optional source URL for an icon displayed in the field
+    iconAlt?: string,                                     // Alternative text for the icon.
+    disabled?: boolean,                                   // If true, disables the field.
+    dateFormat?: string,                                  // Format string for DatePicker
+    showTimeSelect?: boolean,                             // If true, enables time selection in DatePicker.
+    children?: React.ReactNode,                           // Children elements, used in custom fields like Select.
+    renderSkeleton?: (field: any) => React.ReactNode,     // Custom render function for skeleton loading state.
 }
 
+
+// Function to render different field types based on the provided props.
 const RenderField = ({ field, props } : {field: any, props: CustomProps}) => {
 
   const {fieldType, iconSrc, iconAlt, placeholder, showTimeSelect, dateFormat, renderSkeleton} = props;
 
+  // Switch statement to determine the rendering of each field type.
   switch (props.fieldType) {
     case FormFieldType.INPUT:
       return (
@@ -54,7 +58,7 @@ const RenderField = ({ field, props } : {field: any, props: CustomProps}) => {
             <FormControl>
               <Input
                 placeholder={placeholder}
-                {...field}
+                {...field}                       // Spread operator for field properties from React Hook Form.
                 className="shad-input border-0"
               />
             </FormControl>
@@ -87,9 +91,9 @@ const RenderField = ({ field, props } : {field: any, props: CustomProps}) => {
           <FormControl>
             <DatePicker
               selected={field.value}
-              onChange={(date) => field.onChange(date)}
-              dateFormat={dateFormat ?? 'MM/dd/yyyy'}
-              showTimeSelect={showTimeSelect ?? false}
+              onChange={(date) => field.onChange(date)}       // Updates field value when date changes.
+              dateFormat={dateFormat ?? 'MM/dd/yyyy'}         // Configurable date format with a default value.
+              showTimeSelect={showTimeSelect ?? false}        // Enables time selection if specified.
               timeInputLabel="Time:"
               wrapperClassName="date-picker"
             />
@@ -98,7 +102,7 @@ const RenderField = ({ field, props } : {field: any, props: CustomProps}) => {
       )
     case FormFieldType.SKELETON:
       return (
-        renderSkeleton ? renderSkeleton(field) : null
+        renderSkeleton ? renderSkeleton(field) : null         // Renders custom skeleton if provided.
       )
     case FormFieldType.SELECT:
       return (
@@ -146,6 +150,7 @@ const RenderField = ({ field, props } : {field: any, props: CustomProps}) => {
   }
 }
 
+// Main component for rendering a custom form field
 const CustomFormField = (props: CustomProps) => {
 
   const {control, fieldType, name, label, placeholder, iconSrc, iconAlt} = props;
