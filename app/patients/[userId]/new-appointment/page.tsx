@@ -1,4 +1,4 @@
-import AppointmentForm from "@/components/forms/AppointmentForm"
+import { AppointmentForm } from "@/components/forms/AppointmentForm"
 import { getPatient } from "@/lib/actions/patient.actions";
 import Image from "next/image"
 
@@ -19,9 +19,9 @@ const NewAppointment = async ({params: {userId}}: SearchParamProps) => {
         />
 
         <AppointmentForm
-            type="create"
-            userId={userId}
             patientId={patient?.$id}
+            userId={userId}
+            type="create"
         />
 
         <p className="copyright mt-10 py-12">

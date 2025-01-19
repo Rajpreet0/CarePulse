@@ -18,12 +18,12 @@ import { Appointment } from "@/types/appwrite.types";
 
 
 
-const AppointmentForm = ({userId, patientId, type, appointment, setOpen}: {
+export const AppointmentForm = ({userId, patientId, type, appointment, setOpen}: {
     userId: string,
     patientId: string, 
     type: "create" | "cancel" | "schedule",
     appointment?: Appointment,
-    setOpen: (open: boolean) => void }) => {
+    setOpen?: (open: boolean) => void }) => {
 
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
@@ -201,5 +201,3 @@ const AppointmentForm = ({userId, patientId, type, appointment, setOpen}: {
     </Form>
   )
 }
-
-export default AppointmentForm
